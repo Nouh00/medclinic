@@ -5,15 +5,10 @@
 {% block content %}
 <h1>Appointments List</h1>
 
-
 <ul class="list-group">
-
-    <li class="list-group-item">ahemd</li>
-    <li class="list-group-item">omer</li>
-    <li class="list-group-item">sara</li>
-    <li class="list-group-item">john doe</li>
-
+{% for patient in appointments %}
+    <li class="list-group-item">{{patient.patient.fname}} {{patient.patient.lname}} {{patient.patient.phone}}</li>
+{% endfor %}
 </ul>
-
 
 {% endblock  %}

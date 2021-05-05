@@ -6,10 +6,11 @@ from phonenumber_field.modelfields import PhoneNumberField
 class Profile(models.Model):
     fname = models.CharField(max_length=100)
     lname = models.CharField(max_length=100)
-    birth = models.DateTimeField()
+    birth = models.DateField()
     phone = PhoneNumberField()
     email = models.EmailField(max_length=254)
     adresse = models.CharField(max_length=100)
+    added_date = models.DateTimeField(auto_now_add=True, null=True)
 
     class Meta:
         abstract = True
