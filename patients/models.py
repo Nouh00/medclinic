@@ -13,7 +13,9 @@ class Profile(models.Model):
 
     class Meta:
         abstract = True
-
+    def __str__(self):
+        return self.fname
+    
 
 class Patient(Profile):
     patient_id = models.AutoField(primary_key=True)
