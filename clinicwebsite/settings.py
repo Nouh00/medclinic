@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'appointments',
     'phonenumber_field',
-    'patients'
+    'patients',
+    'accounts',
 ]
 
 MIDDLEWARE = [

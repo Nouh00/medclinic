@@ -9,4 +9,4 @@ def index(request):
 
 
 def add_appointments(request):
-    return render(request, 'expanses/add-appointments.html')
+    return render(request, 'appointments/book_appointment/add-appointments.html')
