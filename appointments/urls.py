@@ -5,6 +5,6 @@ app_name ='appointments'
 
 urlpatterns = [
     path('', views.index, name='appointments'),
-    path('add-appointment/', views.add_appointments, name='add-appointments')
+    path('add-appointment/', views.add_appointments, name='add-appointment'),
 
 ]

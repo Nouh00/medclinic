@@ -11,4 +11,8 @@
 {% endfor %}
 </ul>
 
+<form action="{% url 'appointments:add-appointment' %}">
+    <button class="btn btn-primary btn-lg" type="submit">add appointment</button>
+</form>
+
 {% endblock  %}
