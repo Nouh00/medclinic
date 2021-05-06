@@ -1,0 +1,32 @@
+
+
+{% load static %}
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Medical Clinic . {% block title %} {% endblock %} </title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/main.css'  %}" rel="stylesheet">
+    <meta name="theme-color" content="#7952b3">
+
+
+    
+    <!-- Custom styles for this template -->
+    <link href="{% static 'css/dashboard.css'  %}" rel="stylesheet">
+  </head>
+
+  <div class="px-4 py-5 my-5 text-center">
+    <img class="d-block mx-auto mb-4" src="{% static 'img/appointment_form/LOGO-01.svg' %}" alt="" width="72" height="57">
+    <h1 class="display-5 fw-bold">Medical Cabinet</h1>
+    <div class="col-lg-6 mx-auto">
+      <p class="lead mb-4">Welcom To your not fav medical cabinet</p>
+      <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+        <a href="{% url 'accounts:signup' %}" class="btn btn-primary btn-lg px-4 me-sm-3">SignUp</a>
+        <a href="{% url 'accounts:login' %}" class="btn btn-outline-secondary btn-lg px-4">LogIn</a>
+
+      </div>
+    </div>
+  </div>
+

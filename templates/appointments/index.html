@@ -7,6 +7,7 @@
 
 <ul class="list-group">
 {% for patient in appointments %}
+    <h6>{{patient.appointment_state}}</h6>
     <li class="list-group-item">{{patient.patient.fname}} {{patient.patient.lname}} {{patient.patient.phone}}</li>
 {% endfor %}
 </ul>

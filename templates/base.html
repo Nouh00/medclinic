@@ -24,11 +24,12 @@
     <span class="navbar-toggler-icon"></span>
   </button>
   <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
-  <ul class="navbar-nav px-3">
-    <li class="nav-item text-nowrap">
-      <a class="nav-link" href="#">Sign out</a>
-    </li>
-  </ul>
+  <div class="navbar-nav px-3">
+      <form id='my_form' action="{% url 'accounts:logout' %}" method='post'> 
+      {% csrf_token %}
+      <a class="nav-link" href="javascript:{}" onclick="document.getElementById('my_form').submit();">Logout</a>
+    </form>
+  </div>
 </header>
 
 <div class="container-fluid">

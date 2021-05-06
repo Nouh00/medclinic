@@ -1,18 +1,25 @@
 @import url('https://fonts.googleapis.com/css2?family=Lato:wght@700&display=swap');
 
+#numberinput{
+  width: 100%;
+  margin: 5px;
+  padding:15px 20px;
+  display: inline-block;
+  border: 3px solid #c4c4c4;
+  border-radius: 10px;
+}
 .logo {
-  height: 111px;
-  width: 157px;
-  margin-left: 60px;
-  margin-top: 63px;
+  width: 25%;
+  margin-left: 10%;
+  margin-top: 10%;
 }
 
 div h1 {
-  font-family: 'lato', sans-serif;
+  font-family: "Lato", sans-serif;
   font-weight: 700;
-  margin-left: 60px;
-  margin-top: 60px;
-  font-size: 72px;
+  margin-left: 10%;
+  margin-top: 13%;
+  font-size: 350%;
   color: #3399ff;
 }
 
@@ -21,9 +28,9 @@ div h1 span {
 }
 
 .appointment-img {
-  width: 520px;
-  margin-left: 50px;
-  margin-top: 50px;
+  width: 80%;
+  margin-left: 7%;
+  margin-top: 6%;
 }
 
 .form-control-lg {
@@ -32,40 +39,41 @@ div h1 span {
 }
 
 .appointment-form {
-  margin: 130px 50px 50px 50px;
-  display: flexbox;
+  margin: 5% 5% 5% 5%;
 }
 
 input[type="text"],
 [type="email"],
 [type="date"] {
   width: 100%;
-  padding: 20px 25px;
-  margin: 8px 0;
+  margin: 5px;
+  padding:15px 20px;
   display: inline-block;
   border: 3px solid #c4c4c4;
-  border-radius: 15px;
+  border-radius: 10px;
 
-}
-
-#numberinput{
-  width: 100%;
-  padding: 20px 25px;
-  margin: 8px 0;
-  display: inline-block;
-  border: 3px solid #c4c4c4;
-  border-radius: 15px;
 }
 
 .btn-lg {
   font-family: "Lato", sans-serif;
   font-size: 20px;
-  margin-top: 50px;
+  margin: 5% 12%;
   background-color: #3399ff;
   font-weight: 700;
   border-radius: 10px;
   border: none ;
-  height: 60px;
-  width: 600px ;
-  display: inline-block;
+  width: 80%;
+  padding: 1.5%;
+
+
+}
+
+.success-img{
+  margin-top: 15%;
+  margin-bottom: 5%;
+  width: 30%;
+}
+
+div h2{
+  color: #757575;
 }
