@@ -3,13 +3,16 @@ from .models import appointment
 from patients.models import Patient
 from .forms import add_appointment_form, add_patient_form
 from django.http import HttpResponseRedirect
+from django.contrib.auth.decorators import login_required
+from accounts.decorators import allowed_users 
 
 # Create your views here.
-
+@login_required(login_url="accounts:login")
+@allowed_users(allowed_roles=['admin','secretary'])
 def index(request):
     appointments = appointment.objects.filter(appointment_state='Approved')
-
     return render(request, 'appointments/index.html', {"appointments": appointments})
+
 
 
 def add_appointments(request):
@@ -26,6 +29,7 @@ def add_appointments(request):
 
     context = {'patient_form':patient_form}
     return render(request, 'appointments/book_appointment/add-appointments.html', context)
+
 
 def book_success(request):
     return render(request, 'appointments/book_appointment/booking_success.html')

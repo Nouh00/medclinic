@@ -2,10 +2,14 @@
 
 
 <main class="form-login">
-  <form action={% url 'accounts:login' %} method="post">
+  <form action="{% url 'accounts:login' %}" method="post">
   {% csrf_token %}
     <h1 class="h3 mb-3 fw-normal">Please LogIn</h1>
     {{ form }}
+    {% if request.GET.next %}
+    <input type="hidden" name="next" value="{{ request.GET.next }}" >
+    {% endif %}
+
     <input type="submit" value="LogIn">
   </form>
 </main>
