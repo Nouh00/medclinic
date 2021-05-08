@@ -8,10 +8,16 @@ from accounts.decorators import allowed_users
 
 # Create your views here.
 @login_required(login_url="accounts:login")
-@allowed_users(allowed_roles=['admin','secretary'])
+@allowed_users(allowed_roles=['admin','secretary','doctor'])
 def index(request):
-    appointments = appointment.objects.filter(appointment_state='Approved')
-    return render(request, 'appointments/index.html', {"appointments": appointments})
+    pending_appointments = appointment.objects.filter(appointment_state='Pending', patient__isnull=False)
+    Approved_appointments = appointment.objects.filter(appointment_state='Approved', patient__isnull=False)
+
+    appointments = {
+        "pending_appointments":pending_appointments,
+        "approved_appointments":Approved_appointments
+    }
+    return render(request, 'appointments/index.html', appointments)
 
 
 
@@ -35,3 +41,21 @@ def book_success(request):
     return render(request, 'appointments/book_appointment/booking_success.html')
 
 
+
+@login_required(login_url="accounts:login")
+@allowed_users(allowed_roles=['admin','secretary'])
+def delete_appointment(request, patient_id):
+    appointment.objects.get(patient_id=patient_id).delete()
+    return redirect('appointments:appointments')
+
+
+
+@login_required(login_url="accounts:login")
+@allowed_users(allowed_roles=['admin','secretary','doctor'])
+def change_state(request, patient_id):
+    appointments = appointment.objects.get(patient_id=patient_id)
+    if appointments.appointment_state == 'Pending':
+        appointments.appointment_state = 'Approved'
+        appointments.save()
+
+    return redirect('appointments:appointments')

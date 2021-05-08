@@ -1,15 +1,35 @@
 {% extends 'base.html' %}
 
-
 {% load static %}
 
+{% block title %} Patients{% endblock  %}
 
 {% block content %}
+<div class="d-grid gap-5 d-sm-flex mt-4 ">
+<h1>Patient List</h1>
 
-<h1>Patient Page</h1>
-<ul class="list-group">
-{% for patient in patients %}
-    <li class="list-group-item">{{patient.fname}} {{patient.lname}}</li>
-{% endfor %}
-</ul>
-{% endblock  %}
+<form action="{% url 'patients:add_patient' %}" method='post'>
+{% csrf_token %}
+    <button class="btn btn-primary btn-lg" type="submit">add Patient</button>
+</form>
+</div>
+
+
+<div class="row mt-4">
+    <div class="col">
+        <ul class="list-group">
+            {% for patient in patients %}
+                <li class="list-group-item"> {{patient.fname}} {{patient.lname}}
+                    <div class="float-end">
+                        <form action="delete_patient/{{ patient.patient_id }}/" method="post">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                        </form>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+
+{% endblock %}

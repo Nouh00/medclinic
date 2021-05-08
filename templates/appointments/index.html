@@ -1,19 +1,62 @@
 {% extends 'base.html' %}
 
-{% block title %} Appointments{% endblock  %}
+{% block title %} Appointments{% endblock %}
 
 {% block content %}
-<h1>Appointments List</h1>
+<div class="d-grid gap-5 d-sm-flex mt-4 ">
+    <h1>Appointments List</h1>
 
-<ul class="list-group">
-{% for patient in appointments %}
-    <h6>{{patient.appointment_state}}</h6>
-    <li class="list-group-item">{{patient.patient.fname}} {{patient.patient.lname}} {{patient.patient.phone}}</li>
-{% endfor %}
-</ul>
+    <form action="{% url 'appointments:add-appointment' %}">
+        {% csrf_token %}
+        <button class="btn btn-primary btn-lg" type="submit">add appointment</button>
+    </form>
+</div>
 
-<form action="{% url 'appointments:add-appointment' %}">
-    <button class="btn btn-primary btn-lg" type="submit">add appointment</button>
-</form>
 
-{% endblock  %}
+<div class="row mt-4">
+    <div class="col">
+        <h3>Approved Appointments</h3>
+        <ul class="list-group">
+            {% for patient in approved_appointments %}
+            <li class="list-group-item"> {{patient.patient.fname}} {{patient.patient.lname}}
+                <div class="float-end">
+                    <form action="delete_appointment/{{ patient.patient.patient_id }}/" method="post">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                    </form>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+
+
+<div class="row mt-4">
+    <div class="col">
+        <h3>Pending Appointments</h3>
+        <ul class="list-group">
+            {% for patient in pending_appointments %}
+            <li class="list-group-item"> {{patient.patient.fname}} {{patient.patient.lname}}
+                <div class="float-end">
+                    <form action="delete_appointment/{{ patient.patient.patient_id }}/" method="post">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                    </form>
+                </div>
+                <div class="float-end">
+                    <form action="change_state/{{ patient.patient.patient_id }}/" method="post">
+                        {% csrf_token %}
+                        <button type="submit"
+                            class="btn btn-primary btn-sm  me-sm-3">{{patient.appointment_state}}</button>
+                    </form>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+
+
+
+{% endblock %}
