@@ -2,34 +2,74 @@
 
 {% load static %}
 
-{% block title %} Patients{% endblock  %}
+{% block title %} Patients{% endblock %}
 
 {% block content %}
-<div class="d-grid gap-5 d-sm-flex mt-4 ">
-<h1>Patient List</h1>
 
-<form action="{% url 'patients:add_patient' %}" method='post'>
-{% csrf_token %}
-    <button class="btn btn-primary btn-lg" type="submit">add Patient</button>
-</form>
-</div>
+<div class="container-fluid">
+    <div class="row py-5">
+        <div class="col py-3 px-5">
+            <h1 id="Page-title">Patients</h1>
+            <!--Patients Title-->
+        </div>
+    </div>
+    <div class="row px-5">
 
+        <!--New Patient Button-->
+        <div class="col-5">
 
-<div class="row mt-4">
-    <div class="col">
+            <form action="{% url 'patients:add_patient' %}" method='post'>
+                {% csrf_token %}
+                <button class="btn btn-primary btn-md" id="Add-btn" type="submit">add Patient</button>
+            </form>
+        </div>
+        <!--End New Patient Button-->
+
+        <!--Search bar-->
+        <div class="col d-flex justify-content-end">
+            <form class="d-flex">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" id="searchbar">
+                <button class="btn btn" type="submit" id="Search-btn">Search</button>
+            </form>
+        </div>
+    </div>
+    <!--End Search bar-->
+
+    <div class="row px-4 py-5">
+        <!--row-->
+
+        <!--Patients List-->
         <ul class="list-group">
             {% for patient in patients %}
-                <li class="list-group-item"> {{patient.fname}} {{patient.lname}}
-                    <div class="float-end">
-                        <form action="delete_patient/{{ patient.patient_id }}/" method="post">
+
+            <!--Patients item 01-->
+            <li class="list-group-item">
+                <div class="row">
+                    <div class="col-md-8 py-2">{{patient.fname}} {{patient.lname}}</div>
+                    <div class="col-md d-flex justify-content-end">
+                        <form action="patient_profile/{{ patient.patient_id }}" method="post">
                             {% csrf_token %}
-                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                            <button type="submit" class="btn btn-danger btn-md" id="viewprofile-btn">View profile</button>
                         </form>
                     </div>
-                </li>
+                    <div class="col-md">
+                        <button type="button" class="btn btn-primary btn-md" id="editprofile-btn">Edit</button>
+                    </div>
+                    <div class="col-md">
+                        <form action="delete_patient/{{ patient.patient_id }}/" method="post">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger btn-md" id="deleteprofile-btn">Delete</button>
+                        </form>
+                    </div>
+                </div>
+            </li>
+            <!--End Patient item 01-->
+
+            <!--Add Patients items Here!-->
             {% endfor %}
         </ul>
     </div>
-</div>
+    <!--End row-->
 
+</div>
 {% endblock %}

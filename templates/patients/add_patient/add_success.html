@@ -1,0 +1,37 @@
+{% extends 'patients/add_patient/base_add.html' %}
+{% load static %}
+
+{% block title %}Success{% endblock  %}
+
+{% block content %}
+
+            <div class="col-xl-8 " style="background-color: #fafafa; height: 100vh;"> <!--rightside main Col-->
+
+              <div class="row py-5"> <!--1st row-->
+
+                <div class="col d-flex justify-content-center py-2"> <!--tick img-->
+                  <img class="success-img" src="{% static 'img\appointment_form\tick.png' %}" alt="appointment-img">
+                </div> <!--End tick img-->
+
+              </div><!--End 1st row-->
+
+              <div class="row"> <!--2nd row-->
+                
+                <div class="col d-flex justify-content-center">
+                  <h2>Your pateint has been<br>  added successfully!</h2>
+                </div>
+
+              </div> <!--End 2nd row-->
+
+              <div class="row"> <!--3rd row-->
+
+                <form class="col d-flex justify-content-center py-4" action="{% url 'patients:patients' %}" method='post'>
+                {% csrf_token %}
+                  <button class="btn btn-primary btn-lg" type="submit">Back home</button>
+                <!--End Backhome btn-->
+                </form>
+              </div> <!--End 3rd row-->
+
+            </div> <!--End rightside main Col-->
+
+{% endblock  %}

@@ -3,6 +3,7 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login, logout
 from .decorators import unauthenticated_user
 from appointments.models import appointment
+from patients.models import Patient
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import Group
 
@@ -69,4 +70,3 @@ def dashboard(request):
         "total_appointments":total_appointments
     }
     return render(request, 'accounts/status.html', appointments)
-

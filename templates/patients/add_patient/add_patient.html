@@ -1,44 +1,52 @@
-{% extends 'base.html' %}
+{% extends 'patients/add_patient/base_add.html' %}
 
 {% load static %}
-
-{% block header %}
-    <link rel="stylesheet" href={% static 'css/appointment-form.css' %} >
-{% endblock  %}
+{% block title %} Add patient{% endblock  %}
 
 {% block content %}
-            <h1 class="mt-7">Add Patient</h1>
-              <!--patient form-->
-              <div class="appointment-form">
-                <form enctype="multipart/form-data" action="{% url 'patients:add_patient' %}" method='POST'>
+            <div class="col-xl-8" style="background-color: #fafafa; height: 100vh;">
+
+
+              <div class="container-fluid py-5"> <!--rightside main container-->
+                <div class="row px-5 py-5"> <!--rightside main row-->
+                  <div class="col py-5"> <!--rightside main Col-->
+
+                    <div class="patient-form"> <!--Patient form-->
+                       <form enctype="multipart/form-data" action="{% url 'patients:add_patient' %}" method='POST'>
                 {% csrf_token %}
                   <!--Container-->
                   <div class="container">
                     <div class="row">
-                      <div class="col-md-6"> <!--First name-->
+                      <div class="col-xl"> <!--First name-->
                         {{patient_form.fname}}
                       </div>
-                      <div class="col-md-6"><!--Last name-->
+                      <div class="col-xl"><!--Last name-->
                         {{patient_form.lname}}
                       </div>
-                      <div class="col"><!--Birth date-->
+                    </div>
+                      <div class="col-xl"><!--Birth date-->
                         {{patient_form.birth}}  
                       </div>
-                    </div>
-                    <div class="col"><!--Mail-->
+                    
+                    <div class="col-xl"><!--Mail-->
                       {{patient_form.email}}
                     </div>
-                    <div class="col"><!--Phone num-->
+                    <div class="col-xl"><!--Phone num-->
                       {{patient_form.phone}}
                     </div>
-                    <div class="col"><!--Adresse-->
+                    <div class="col-xl"><!--Adresse-->
                       {{patient_form.adresse}}
                     </div>
-                    <div class="d-grid gap-2 col-6 mx-auto">
+                    <div class="col-xl d-flex justify-content-center py-5">
                       <button class="btn btn-primary btn-lg" type="submit">Add patient</button>
                     </div>
                   </div> <!--End Container-->
                 </form> <!--End Form-->
-              </div>
+                    </div> <!--End Form-->
 
+                  </div> <!--End rightside main Col-->
+                </div> <!--End rightside main row-->
+              </div> <!--End rightside main container-->
+              
+            </div>
 {% endblock  %}

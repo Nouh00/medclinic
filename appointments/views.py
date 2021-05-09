@@ -10,15 +10,30 @@ from accounts.decorators import allowed_users
 @login_required(login_url="accounts:login")
 @allowed_users(allowed_roles=['admin','secretary','doctor'])
 def index(request):
+    appointments = appointment.objects.filter(patient__isnull=False).order_by("-appointment_date")
+    
+    return render(request, 'appointments/index.html', {"appointments":appointments})
+
+@login_required(login_url="accounts:login")
+@allowed_users(allowed_roles=['admin','secretary','doctor'])
+def pending_appointments(request):
     pending_appointments = appointment.objects.filter(appointment_state='Pending', patient__isnull=False)
-    Approved_appointments = appointment.objects.filter(appointment_state='Approved', patient__isnull=False)
 
     appointments = {
         "pending_appointments":pending_appointments,
+    }
+    return render(request, 'appointments/pending.html', appointments)
+
+
+@login_required(login_url="accounts:login")
+@allowed_users(allowed_roles=['admin','secretary','doctor'])
+def approved_appointments(request):
+    Approved_appointments = appointment.objects.filter(appointment_state='Approved', patient__isnull=False)
+
+    appointments = {
         "approved_appointments":Approved_appointments
     }
-    return render(request, 'appointments/index.html', appointments)
-
+    return render(request, 'appointments/approved.html', appointments)
 
 
 def add_appointments(request):
@@ -43,7 +58,7 @@ def book_success(request):
 
 
 @login_required(login_url="accounts:login")
-@allowed_users(allowed_roles=['admin','secretary'])
+@allowed_users(allowed_roles=['admin','secretary', 'doctor'])
 def delete_appointment(request, patient_id):
     appointment.objects.get(patient_id=patient_id).delete()
     return redirect('appointments:appointments')

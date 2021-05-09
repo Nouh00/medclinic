@@ -20,17 +20,32 @@ def add_patient(request):
         patient_form = add_patient_form(request.POST)
         if patient_form.is_valid():
             patient_form.save()
-            return redirect('patients:book_success')
+            return redirect('patients:add_success')
 
     context = {'patient_form':patient_form}
     return render(request, 'patients/add_patient/add_patient.html', context)
 
 
-def book_success(request):
-    return render(request, 'patients/add_patient/booking_success.html')
+def add_success(request):
+    return render(request, 'patients/add_patient/add_success.html')
 
 @login_required(login_url="accounts:login")
-@allowed_users(allowed_roles=['admin','secretary'])
+@allowed_users(allowed_roles=['admin','secretary','doctor'])
 def delete_patient(request, patient_id):
     Patient.objects.get(patient_id=patient_id).delete()
     return redirect('patients:patients')
+
+
+@login_required
+def patient_profile(request, patient_id):
+    patient = Patient.objects.get(patient_id=patient_id)
+    patient_data = {
+        'fname': patient.fname,
+        'lname': patient.lname,
+        'birth': patient.birth,   
+        'phone': patient.phone,
+        'email': patient.email,   
+        'adresse': patient.adresse
+    }
+
+    return render(request, 'patients/profile/patient.html', patient_data)
