@@ -43,6 +43,10 @@ INSTALLED_APPS = [
     'phonenumber_field',
     'patients',
     'accounts',
+    'drugs',
+    'prescriptions',
+    'bills',
+    'consultation'
 ]
 
 MIDDLEWARE = [

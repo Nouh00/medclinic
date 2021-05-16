@@ -61,7 +61,7 @@ def book_success(request):
 @allowed_users(allowed_roles=['admin','secretary', 'doctor'])
 def delete_appointment(request, patient_id):
     appointment.objects.get(patient_id=patient_id).delete()
-    return redirect('appointments:appointments')
+    return HttpResponseRedirect(request.path_info)
 
 
 
@@ -73,4 +73,4 @@ def change_state(request, patient_id):
         appointments.appointment_state = 'Approved'
         appointments.save()
 
-    return redirect('appointments:appointments')
+    return HttpResponseRedirect(request.path_info)

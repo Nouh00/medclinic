@@ -3,6 +3,7 @@ from .models import Patient
 from django.contrib.auth.decorators import login_required
 from accounts.decorators import unauthenticated_user, allowed_users
 from appointments.forms import add_patient_form
+import datetime
 # Create your views here.
 
 @login_required(login_url="accounts:login")
@@ -39,13 +40,17 @@ def delete_patient(request, patient_id):
 @login_required
 def patient_profile(request, patient_id):
     patient = Patient.objects.get(patient_id=patient_id)
+    td=datetime.datetime.now().date() 
+    birth = patient.birth
+    age = int((td-birth).days /365.25)
     patient_data = {
         'fname': patient.fname,
         'lname': patient.lname,
         'birth': patient.birth,   
         'phone': patient.phone,
         'email': patient.email,   
-        'adresse': patient.adresse
+        'adresse': patient.adresse,
+        'age': age
     }
 
     return render(request, 'patients/profile/patient.html', patient_data)

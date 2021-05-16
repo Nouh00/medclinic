@@ -7,6 +7,8 @@ name = "pypi"
 django = "*"
 django-heroku = "*"
 django-phonenumber-field = {extras = ["phonenumbers"], version = "*"}
+django-pandas = "*"
+pandas = "*"
 
 [dev-packages]
 

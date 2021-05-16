@@ -23,6 +23,12 @@ class Profile(models.Model):
 class Patient(Profile):
     patient_id = models.AutoField(primary_key=True)
 
+class doctor(Profile):
+    doctor_id = models.AutoField(primary_key=True)
+
+class secretary(Profile):
+    secretary_id = models.AutoField(primary_key=True)
+
     
 
 

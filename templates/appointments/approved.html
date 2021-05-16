@@ -32,7 +32,7 @@
                 <ul class="dropdown-menu">
                     <li><a id="dropdown-item" class="dropdown-item" href="{% url 'appointments:appointments' %}">All</a></li>
                     <li><a id="dropdown-item" class="dropdown-item" href="{% url 'appointments:pending_appointments' %}">Pending</a></li>
-                    <li><a id="dropdown-item" class="dropdown-item" href="{% url 'appointments:approved_appointments' %}">Approved</a></li>
+                    <li><a id="dropdown-item" class="dropdown-item" href="#">Approved</a></li>
                 </ul>
             </div>
         </div>
@@ -62,7 +62,7 @@
                     <div class="col-md-5 py-2">{{patient.patient.fname}} {{patient.patient.lname}}</div>
                     <div class="col-md-3 py-2">{{patient.appointment_date}}</div>
                     <div class="col d-flex justify-content-end">
-                        <form action="change_state/{{ patient.patient.patient_id }}/" method="post">
+                        <form action="#" method="post">
                             {% csrf_token %}
                             <button type="submit" class="btn btn-primary btn-md"
                                 id="Approve-appointment-btn">{{patient.appointment_state}}</button>

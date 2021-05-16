@@ -9,7 +9,7 @@
                     <a  href="{% url 'accounts:dashboard' %}">Dashboard</a> <br>
                 </div>
                 <div class="appointments" data-bs-toggle="collapse" data-bs-target="#appointmentsCollapse" aria-expanded="true" aria-controls="appointmentsCollapse">
-                  <a style="color: #3399ff;" href="{% url 'appointments:appointments' %}">Appointments</a> <br>
+                  <a  href="{% url 'appointments:appointments' %}">Appointments</a> <br>
               </div>
               <div class="collapse multi-collapse" id="appointmentsCollapse">
                 <ul id="appointment-collapse-list">
@@ -21,6 +21,18 @@
               </div>
                 <div class="patients">
                     <a href="{% url 'patients:patients' %}">Patients</a>
+                </div>
+                <div class="drugs">
+                    <a href="{% url 'drugs:drugs' %}">Drugs</a>
+                </div>
+                <div class="consultation">
+                    <a href="{% url 'consultations:consultations' %}">Consultations</a>
+                </div>
+                <div class="bills">
+                    <a href="{% url 'bills:bills' %}">Bills</a>
+                </div>
+                <div class="prescriptions">
+                    <a href="{% url 'prescriptions:prescriptions' %}">Prescriptions</a>
                 </div>
 
                 <div class="patients py-5">
