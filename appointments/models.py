@@ -7,4 +7,5 @@ class appointment(models.Model):
     appointment_state = models.CharField(max_length=10, choices=states)
     patient = models.ForeignKey('patients.Patient',on_delete=models.SET_NULL, null=True)
     
-    
+    def __str__(self):
+        return self.patient

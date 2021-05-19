@@ -1,6 +1,69 @@
 {% extends 'base.html' %}
-{% load static %}
+
+
+{% block title %}
+Drugs
+{% endblock %}
 
 {% block content %}
-<h1>Drugs page</h1>
-{% endblock  %}
+<div class="row py-5">
+    <div class="col py-3 px-5">
+        <h1 id="Page-title">Drugs</h1>
+        <!--Drugs Title-->
+    </div>
+</div>
+<div class="row px-5">
+<!--New drug Button-->
+<div class="col-5">
+    <form action="{% url 'drugs:add_drug' %}">
+        {% csrf_token %}
+        <button class="btn btn-primary btn-md" id="Add-btn" type="submit">New Drug</button>
+    </form>
+</div>
+<!--End New drug Button-->
+
+<!--Search bar-->
+<div class="col d-flex justify-content-end">
+    <form class="d-flex">
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" id="searchbar">
+        <button class="btn btn" type="submit" id="Search-btn">Search</button>
+    </form>
+</div>
+</div>
+<!--End Search bar-->
+<div class="row px-5 py-5">
+        <!--row-->
+
+        <!--Appointment List-->
+        <ul class="list-group">
+
+            {% for drug in drugs_list %}
+
+            <!--Appointment item 01-->
+            <li class="list-group-item">
+                <div class="row">
+                    <div class="col-md-5 py-2">{{drug.name}}</div>
+                    <div class="col-md-3 py-2">{{patient.brand}}</div>
+                    <div class="col d-flex justify-content-end">
+                        <div class="col">
+                        <form action="delete_drug/{{ drug.id }}/" method="post">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger btn-md"
+                                id="Delete-drug-btn">Delete</button>
+                        </form>
+                    </div>
+                    </div>
+                    
+                </div>
+            </li>
+            <!--End Appointment item 01-->
+
+            <!--Add Appointments items Here!-->
+            {% endfor %}
+        </ul>
+    </div>
+    <!--End row-->
+
+    </div>
+
+{% endblock %}
