@@ -10,7 +10,12 @@ import datetime
 @allowed_users(allowed_roles=['admin','secretary','doctor'])
 def index(request):
     patients = Patient.objects.all().order_by('lname')
-    return render(request, 'patients/index.html', {'patients': patients})
+    patient_form = add_patient_form()
+    context = {
+        'patients': patients,
+        "patient_form":patient_form
+    }
+    return render(request, 'patients/index.html', context)
 
 
 @login_required(login_url="accounts:login")
@@ -21,14 +26,28 @@ def add_patient(request):
         patient_form = add_patient_form(request.POST)
         if patient_form.is_valid():
             patient_form.save()
-            return redirect('patients:add_success')
+            return redirect('patients:patients')
 
-    context = {'patient_form':patient_form}
-    return render(request, 'patients/add_patient/add_patient.html', context)
+    return render(request, "patients:patients")
 
 
-def add_success(request):
-    return render(request, 'patients/add_patient/add_success.html')
+@login_required(login_url="accounts:login")
+@allowed_users(allowed_roles=['admin','secretary','doctor'])
+def edit_patient(request, patient_id):
+
+    patient  = Patient.objects.get(patient_id=patient_id)
+    patient_form = add_patient_form(instance=patient)
+
+    if request.method=='POST':
+        patient_form = add_patient_form(request.POST, instance=patient)
+        if patient_form.is_valid():
+            patient_form.save()
+            return redirect('patients:patients')
+
+    context = {"patient_form": patient_form}
+    return render(request, 'patients/profile/edit_patient.html', context)
+
+
 
 @login_required(login_url="accounts:login")
 @allowed_users(allowed_roles=['admin','secretary','doctor'])

@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% load static %}
+{% load widget_tweaks %}
 
 {% block title %} Patients{% endblock %}
 
@@ -17,11 +18,8 @@
 
         <!--New Patient Button-->
         <div class="col-5">
-
-            <form action="{% url 'patients:add_patient' %}" method='post'>
-                {% csrf_token %}
-                <button class="btn btn-primary btn-md" id="Add-btn" type="submit">add Patient</button>
-            </form>
+                <button class="btn btn-primary btn-md" id="Add-btn" type="submit" 
+                data-bs-target="#newpatientpopup" data-bs-toggle="modal" data-bs-dismiss="modal">add Patient</button>
         </div>
         <!--End New Patient Button-->
 
@@ -47,14 +45,18 @@
                 <div class="row">
                     <div class="col-md-8 py-2">{{patient.fname}} {{patient.lname}}</div>
                     <div class="col-md d-flex justify-content-end">
-                        <form action="patient_profile/{{ patient.patient_id }}" method="post">
+                        <form action="patient_profile/{{ patient.patient_id }}/" method="post">
                             {% csrf_token %}
                             <button type="submit" class="btn btn-danger btn-md" id="viewprofile-btn">View profile</button>
                         </form>
                     </div>
                     <div class="col-md">
-                        <button type="button" class="btn btn-primary btn-md" id="editprofile-btn">Edit</button>
+                    <form action="{% url 'patients:edit_patient' patient.patient_id %}">
+                    {% csrf_token %}
+                        <button type="submit" class="btn btn-primary btn-md" id="editprofile-btn">Edit</button>
+                    </form>
                     </div>
+                    
                     <div class="col-md">
                         <form action="delete_patient/{{ patient.patient_id }}/" method="post">
                             {% csrf_token %}
@@ -72,4 +74,83 @@
     <!--End row-->
 
 </div>
+
+<!--add patient popup-->
+
+<div class="modal fade" id="newpatientpopup" aria-hidden="true" aria-labelledby="newpatientpopuplabel"
+          tabindex="-1">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+
+              <!-- === Modal Header === -->
+              <div class="modal-header text-center shadow mb-3" id="modalheader">
+                <h5 class="modal-title w-100" id="newpatientpopuplabel">New Patient</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                  aria-label="Close"></button>
+              </div>
+              <!-- === End Modal Header === -->
+
+              <!-- === Modal Body === -->
+
+              <div class="modal-body">
+                <div class="container">
+                  <!--rightside main container-->
+                  <div class="row">
+                    <!--rightside main row-->
+                    <div class="col px-4">
+                      <!--rightside main Col-->
+
+                      <form enctype="multipart/form-data" action="{% url 'patients:add_patient' %}" method='POST'>
+                        {% csrf_token %}
+                        <div class="row py-1">
+                          <!--First name-->
+                          {{patient_form.fname}}
+                        </div>
+
+                        <div class="row py-1">
+                          <!--Last name-->
+                          {{patient_form.lname}}
+                        </div>
+                        <div class="row py-1">
+                          <!--Birth date-->
+                          {{patient_form.birth}} 
+                        </div>
+                        <div class="row py-1">
+                          <!--Mail-->
+                          {{patient_form.email}}
+                        </div>
+                        <div class="row py-1">
+                          <!--Phone num-->
+                          {{patient_form.phone}}
+                        </div>
+                        <div class="row py-1">
+                          <!--Adresse-->
+                          {{patient_form.adresse}}
+                        </div>
+
+                        <div class="row py-1">
+                          <div class="col d-flex justify-content-center py-3">
+                            <button class="btn btn-primary btn-lg" type="submit" id="create-profile-btn">Create patient
+                              profile</button>
+                          </div>
+                        </div>
+
+                      </form>
+
+                    </div>
+                    <!--End rightside main Col-->
+                  </div>
+                  <!--End rightside main row-->
+                </div>
+                <!--End rightside main container-->
+              </div>
+
+              <!-- === End Modal Body === -->
+
+            </div>
+          </div>
+        </div>
+<!--end add patient popup-->
+
+
 {% endblock %}

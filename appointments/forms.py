@@ -37,6 +37,8 @@ class add_patient_form(forms.ModelForm):
         }
 
 
+
+
 class add_appointment_form(forms.ModelForm):
     class Meta:
         model = appointment

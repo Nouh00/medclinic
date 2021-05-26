@@ -11,8 +11,12 @@ from accounts.decorators import allowed_users
 @allowed_users(allowed_roles=['admin','secretary','doctor'])
 def index(request):
     appointments = appointment.objects.filter(patient__isnull=False).order_by("-appointment_date")
-    
-    return render(request, 'appointments/index.html', {"appointments":appointments})
+    patient_form = add_patient_form()
+    context = {
+        "appointments":appointments,
+        "patient_form": patient_form
+        }
+    return render(request, 'appointments/index.html', context)
 
 @login_required(login_url="accounts:login")
 @allowed_users(allowed_roles=['admin','secretary','doctor'])
@@ -46,6 +50,8 @@ def add_appointments(request):
             patient_form.save()
             patient_id = Patient.objects.latest('patient_id')
             add_appointment = appointment.objects.create(appointment_date=appointment_date, appointment_state='Pending', patient=patient_id)
+            if request.POST['dirc'] == 'no_success':
+                return redirect('appointments:appointments')    
             return redirect('appointments:book_success')
 
     context = {'patient_form':patient_form}
@@ -61,7 +67,7 @@ def book_success(request):
 @allowed_users(allowed_roles=['admin','secretary', 'doctor'])
 def delete_appointment(request, patient_id):
     appointment.objects.get(patient_id=patient_id).delete()
-    return HttpResponseRedirect(request.path_info)
+    return redirect('appointments:appointments')
 
 
 
@@ -73,4 +79,4 @@ def change_state(request, patient_id):
         appointments.appointment_state = 'Approved'
         appointments.save()
 
-    return HttpResponseRedirect(request.path_info)
+    return redirect('appointments:appointments')

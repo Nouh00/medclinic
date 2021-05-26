@@ -46,7 +46,8 @@ INSTALLED_APPS = [
     'drugs',
     'prescriptions',
     'bills',
-    'consultation'
+    'consultation',
+    'widget_tweaks',
 ]
 
 MIDDLEWARE = [

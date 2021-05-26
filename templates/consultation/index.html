@@ -2,5 +2,83 @@
 {% load static %}
 
 {% block content %}
-<h1>Consultations page</h1>
-{% endblock  %}
+<div class="container-fluid">
+          <div class="row py-5">
+            <div class="col py-3 px-5">
+              <h1 id="Page-title">Consultations</h1>
+              <!--Consultations Title-->
+            </div>
+          </div>
+          <div class="row px-5">
+
+            <!--New Patient Button-->
+            <div class="col-5">
+
+              <form action="#" method='post'>
+                <!--Appointment form link here-->
+                <button type="submit" class="btn btn-primary btn-md" id="Add-btn">Start New Consultations</button>
+              </form>
+
+              <!--
+                  <button type="button" class="btn btn-primary btn-md" id="Add-btn" data-bs-toggle="modal" data-bs-target="#addpatient">New Patient</button>
+                  <div class="modal" id="addpatient" >
+                    <div class="modal-dialog modal-xl modal-dialog-centered" style="height: 1000px;" >
+                      <div class="modal-content" >
+                        <iframe src="D:\Univ\Final Project\Website\Appointments-form\appointment-form.html" h></iframe>
+                      </div>
+                    </div>
+                  </div>
+                   -->
+
+            </div>
+            <!--End New Patient Button-->
+
+            <!--Search bar-->
+            <div class="col d-flex justify-content-end">
+              <form class="d-flex">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" id="searchbar">
+                <button class="btn btn" type="submit" id="Search-btn">Search</button>
+              </form>
+            </div>
+          </div>
+          <!--End Search bar-->
+
+          <div class="row px-5 py-5">
+            <!--row-->
+
+            <!--Consultations List-->
+            <ul class="list-group">
+
+              <!--Consultations item 01-->
+              <li class="list-group-item">
+                <div class="row">
+
+                  <div class="col-md-1 py-2">001</div>
+                  <div class="col-md-4 py-2">Nouh Abanou</div>
+                  <div class="col-md-3 py-2">Date</div>
+
+                  <div class="col-md d-flex justify-content-end">
+                    <form action="#" method='post'>
+                      <button type="submit" class="btn btn-primary btn-md" id="editcons-btn">Edit</button>
+                    </form>
+                  </div>
+
+                  <div class="col-md">
+                    <form action="#" method='post'>
+                      <button type="submit" class="btn btn-danger btn-md" id="deletecons-btn">Delete</button>
+                    </form>
+                  </div>
+
+                </div>
+              </li>
+              <!--End Consultations item 01-->
+
+              <!--Add Consultations items Here!-->
+
+            </ul>
+          </div>
+          <!--End row-->
+
+        </div>
+        <!--End Container-->
+      </div>{% endblock  %}

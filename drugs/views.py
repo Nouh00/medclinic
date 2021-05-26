@@ -9,7 +9,11 @@ from accounts.decorators import unauthenticated_user, allowed_users
 @allowed_users(allowed_roles=['admin','secretary','doctor'])
 def index(request):
     drugs_list = drug.objects.all().order_by('brand')
-    return render(request, "drugs/index.html", {'drugs_list':drugs_list})
+    drug_form = add_drug_form()
+    context = {
+        'drug_form':drug_form,
+        'drugs_list':drugs_list}
+    return render(request, "drugs/index.html", context)
 
 
 @login_required(login_url="accounts:login")
@@ -20,10 +24,8 @@ def add_drug(request):
         drug_form = add_drug_form(request.POST)
         if drug_form.is_valid():
             drug_form.save()
-            return redirect('drugs:drugs')
-
-    context = {'drug_form':drug_form}
-    return render(request, 'drugs:add_drug', context)
+            return redirect('drugs:drugs')  
+    return render(request, 'drugs:add_drug')
 
 
 @login_required(login_url="accounts:login")
