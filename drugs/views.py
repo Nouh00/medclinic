@@ -27,6 +27,22 @@ def add_drug(request):
             return redirect('drugs:drugs')  
     return render(request, 'drugs:add_drug')
 
+@login_required(login_url="accounts:login")
+@allowed_users(allowed_roles=['admin','secretary','doctor'])
+def edit_drug(request, id):
+
+    _drug = drug.objects.get(id = id)
+
+    drug_form = add_drug_form(instance=_drug)
+
+    if request.method=='POST':
+        drug_form = add_drug_form(request.POST,instance=_drug)
+        if drug_form.is_valid():
+            drug_form.save()
+            return redirect('drugs:drugs')
+            
+    context = {"drug_form":drug_form}          
+    return render(request, 'drugs/edit_drug.html', context)
 
 @login_required(login_url="accounts:login")
 @allowed_users(allowed_roles=['admin','secretary','doctor'])

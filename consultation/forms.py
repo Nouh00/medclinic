@@ -1,11 +1,33 @@
 from django import forms
-from django.db import models
-from django.forms import fields
 from .models import consultation
+from patients.models import Patient
 
 
 
 class consul_form(forms.ModelForm):
     class Meta:
         model = consultation
-        fields = ('reason','cons_type','examine','conclusion')
+        fields = ('reason','examine','conclusion')
+        widgets = {
+            'reason':forms.Textarea(attrs={
+                "class":"form-control",
+                "id":"reasons-textarea",
+                "rows":"5",
+                "name":"reasons",
+                "placeholder":"Patient Complains ..."
+            }),
+            'conclusion':forms.Textarea(attrs={
+                "class":"form-control",
+                "id":"reasons-textarea",
+                "rows":"5",
+                "name":"reasons",
+                "placeholder":"Examination ..."
+            }),
+            'examine':forms.Textarea(attrs={
+                "class":"form-control",
+                "id":"reasons-textarea",
+                "rows":"5",
+                "name":"reasons",
+                "placeholder":"Conclusion ..."
+            }),
+        }

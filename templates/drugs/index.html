@@ -6,124 +6,128 @@ Drugs
 {% endblock %}
 
 {% block content %}<div class="container-fluid">
-          <div class="row py-5">
-            <div class="col py-3 px-5">
-              <h1 id="Page-title">Drugs</h1>
-              <!--Drugs Title-->
-            </div>
+  <div class="row py-5">
+    <div class="col py-3 px-5">
+      <h1 id="Page-title">Drugs</h1>
+      <!--Drugs Title-->
+    </div>
+  </div>
+  <div class="row px-5">
+
+    <!--New Patient Button-->
+    <div class="col-5">
+
+      <button type="submit" class="btn btn-primary btn-md" id="Add-btn" data-bs-target="#newdrugpopup"
+        data-bs-toggle="modal" data-bs-dismiss="modal">New Drug</button>
+
+    </div>
+    <!--End New Patient Button-->
+
+    <!--Search bar-->
+    <div class="col d-flex justify-content-end">
+      <form class="d-flex">
+        {% csrf_token %}
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" id="searchbar">
+        <button class="btn btn" type="submit" id="Search-btn">Search</button>
+      </form>
+    </div>
+  </div>
+  <!--End Search bar-->
+
+  <div class="row px-5 py-5">
+    <!--row-->
+
+    <!--Drugs List-->
+    <ul class="list-group">
+      {% for drug in drugs_list %}
+      <!--Drugs item 01-->
+      <li class="list-group-item">
+        <div class="row">
+
+          <div class="col-md-4 py-2">{{drug.name}}</div>
+          <div class="col-md-4 py-2">{{drug.category}}</div>
+
+          <div class="col-md d-flex justify-content-end">
+          <form action="{% url 'drugs:edit_drug' drug.id %}" >
+          {% csrf_token %}
+            <button type="submit" class="btn btn-primary btn-md" id="editdrug-btn">Edit</button>
+          </form>
           </div>
-          <div class="row px-5">
 
-            <!--New Patient Button-->
-            <div class="col-5">
-
-              <button type="submit" class="btn btn-primary btn-md" id="Add-btn" data-bs-target="#newdrugpopup"
-                data-bs-toggle="modal" data-bs-dismiss="modal">New Drug</button>
-
-            </div>
-            <!--End New Patient Button-->
-
-            <!--Search bar-->
-            <div class="col d-flex justify-content-end">
-              <form class="d-flex">
+          <div class="col-md">
+            <form action="delete_drug/{{ drug.id }}/" method='post'>
               {% csrf_token %}
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" id="searchbar">
-                <button class="btn btn" type="submit" id="Search-btn">Search</button>
-              </form>
-            </div>
+              <button type="submit" class="btn btn-danger btn-md" id="deletedrug-btn">Delete</button>
+            </form>
           </div>
-          <!--End Search bar-->
-
-          <div class="row px-5 py-5">
-            <!--row-->
-
-            <!--Drugs List-->
-            <ul class="list-group">
-                {% for drug in drugs_list %}
-              <!--Drugs item 01-->
-              <li class="list-group-item">
-                <div class="row">
-
-                  <div class="col-md-4 py-2">{{drug.name}}</div>
-                  <div class="col-md-4 py-2">{{drug.category}}</div>
-
-                  <div class="col-md d-flex justify-content-end">
-                    <form action="#" method='post'>
-                    {% csrf_token %}
-                      <button type="submit" class="btn btn-primary btn-md" id="editdrug-btn">Edit</button>
-                    </form>
-                  </div>
-
-                  <div class="col-md">
-                    <form action="delete_drug/{{ drug.id }}/" method='post'>
-                    {% csrf_token %}
-                      <button type="submit" class="btn btn-danger btn-md" id="deletedrug-btn">Delete</button>
-                    </form>
-                  </div>
-
-                </div>
-              </li>
-              <!--End Drugs item 01-->
-
-              <!--Add Drugs items Here!-->
-        {% endfor %}    
-            </ul>
-          </div>
-          <!--End row-->
 
         </div>
-        <!--End Container-->
+      </li>
+      <!--End Drugs item 01-->
+
+      <!--Add Drugs items Here!-->
+      {% endfor %}
+    </ul>
+  </div>
+  <!--End row-->
+
+</div>
+<!--End Container-->
+</div>
+</div>
+
+<div class="modal fade" id="newdrugpopup" aria-hidden="true" aria-labelledby="newdrugpopuplabel" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+
+      <!-- === Modal Header === -->
+      <div class="modal-header text-center shadow mb-3" id="modalheader">
+        <h5 class="modal-title w-100" id="newdrugpopuplabel">Add Drug</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <!-- === End Modal Header === -->
+
+      <!-- === Modal Body === -->
+
+      <div class="modal-body">
+        <div class="container">
+          <!--rightside main container-->
+          <div class="row">
+            <!--rightside main row-->
+            <div class="col px-4">
+              <!--rightside main Col-->
+
+              <form method="POST" action="{% url 'drugs:add_drug' %}">
+                {% csrf_token %}
+                <div class="row py-1">
+                  <!--Drug name-->
+                  {{drug_form.name}}
+                </div>
+                <div class="row py-1">
+                  <!--Drug name-->
+                  {{drug_form.brand}}
+                </div>
+
+                <div class="row py-1">
+                  <!--Last name-->
+                  {{drug_form.category}}
+                </div>
+
+                <div class="row py-1">
+                  <div class="col d-flex justify-content-center py-3">
+                    <button class="btn btn-primary btn-lg" type="submit" id="create-profile-btn">Add Drug</button>
+                  </div>
+                </div>
+
+              </form>
+
+            </div>
+            <!--End rightside main Col-->
+          </div>
+          <!--End rightside main row-->
+        </div>
       </div>
     </div>
-
-    <div class="modal fade" id="newdrugpopup" aria-hidden="true" aria-labelledby="newdrugpopuplabel" tabindex="-1">
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-
-          <!-- === Modal Header === -->
-          <div class="modal-header text-center shadow mb-3" id="modalheader">
-            <h5 class="modal-title w-100" id="newdrugpopuplabel">Add Drug</h5>
-            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <!-- === End Modal Header === -->
-
-          <!-- === Modal Body === -->
-
-          <div class="modal-body">
-            <div class="container">
-              <!--rightside main container-->
-              <div class="row">
-                <!--rightside main row-->
-                <div class="col px-4">
-                  <!--rightside main Col-->
-
-                  <form method="POST" action="{% url 'drugs:add_drug' %}">
-                  {% csrf_token %}
-                    <div class="row py-1">
-                      <!--Drug name-->
-                      {{drug_form.name}}
-                    </div>
-                    <div class="row py-1">
-                      <!--Drug name-->
-                      {{drug_form.brand}}
-                    </div>
-
-                    <div class="row py-1">
-                      <!--Last name-->
-                      {{drug_form.category}}
-                    </div>
-
-                    <div class="row py-1">
-                      <div class="col d-flex justify-content-center py-3">
-                        <button class="btn btn-primary btn-lg" type="submit" id="create-profile-btn">Add Drug</button>
-                      </div>
-                    </div>
-
-                  </form>
-
-                </div>
-                <!--End rightside main Col-->
-              </div>
-              <!--End rightside main row-->
-            </div>
-{% endblock %}
+  </div>
+</div>    
+                {% endblock %}

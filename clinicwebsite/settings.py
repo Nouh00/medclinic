@@ -47,7 +47,7 @@ INSTALLED_APPS = [
     'prescriptions',
     'bills',
     'consultation',
-    'widget_tweaks',
+    'django_filters',
 ]
 
 MIDDLEWARE = [

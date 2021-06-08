@@ -11,27 +11,14 @@
           </div>
           <div class="row px-5">
 
-            <!--New Patient Button-->
+            <!--New consultationButton-->
             <div class="col-5">
 
-              <form action="#" method='post'>
-                <!--Appointment form link here-->
-                <button type="submit" class="btn btn-primary btn-md" id="Add-btn">Start New Consultations</button>
-              </form>
-
-              <!--
-                  <button type="button" class="btn btn-primary btn-md" id="Add-btn" data-bs-toggle="modal" data-bs-target="#addpatient">New Patient</button>
-                  <div class="modal" id="addpatient" >
-                    <div class="modal-dialog modal-xl modal-dialog-centered" style="height: 1000px;" >
-                      <div class="modal-content" >
-                        <iframe src="D:\Univ\Final Project\Website\Appointments-form\appointment-form.html" h></iframe>
-                      </div>
-                    </div>
-                  </div>
-                   -->
+              <button type="submit" class="btn btn-primary btn-md" id="Add-btn" data-bs-target="#consultation-1"
+                data-bs-toggle="modal" data-bs-dismiss="modal">Start New Consultations</button>
 
             </div>
-            <!--End New Patient Button-->
+            <!--End New consultationButton-->
 
             <!--Search bar-->
             <div class="col d-flex justify-content-end">
@@ -48,14 +35,14 @@
 
             <!--Consultations List-->
             <ul class="list-group">
-
+              {% for consultation in consultations %}
               <!--Consultations item 01-->
               <li class="list-group-item">
                 <div class="row">
-
-                  <div class="col-md-1 py-2">001</div>
-                  <div class="col-md-4 py-2">Nouh Abanou</div>
-                  <div class="col-md-3 py-2">Date</div>
+                  
+                  <div class="col-md-1 py-2">{{consultation.id}}</div>
+                  <div class="col-md-4 py-2">{{consultation.patient.fname}}</div>
+                  <div class="col-md-3 py-2">{{consultation.added_date}}</div>
 
                   <div class="col-md d-flex justify-content-end">
                     <form action="#" method='post'>
@@ -72,7 +59,7 @@
                 </div>
               </li>
               <!--End Consultations item 01-->
-
+                {% endfor %}
               <!--Add Consultations items Here!-->
 
             </ul>
@@ -81,4 +68,130 @@
 
         </div>
         <!--End Container-->
+        
+  <!-- ******************* Consultation form *******************-->
+
+
+  <div class="modal animate__animated animate__fadeIn animate__fast" id="consultation-1" data-bs-backdrop="static"
+    data-bs-keyboard="false" aria-hidden="true" aria-labelledby="consultationlabel" tabindex="-1">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+      <div class="modal-content">
+
+        <!-- === Modal Header === -->
+        <div class="modal-header text-center shadow mb-3" id="modalheader">
+          <h5 class="modal-title w-100" id="consultationlabel">Patient Consultation</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <!-- === End Modal Header === -->
+
+        <!-- === Modal Body === -->
+        <div class="modal-body">
+
+          <div class="container" id="Consultation-form">
+
+            <form>
+              <div class="row py-2">
+                <div class="col">
+                <label>Patient</label>
+                  <select class="form-select form-select-lg" aria-label=".form-select-lg" id="patients-droplist"
+                    name="patient" required>
+                    <option selected>Select patient .. </option>   <!-- ///// Patients list /////-->
+                    <option value="Nouh">Nouh</option>
+                    <option value="Abed">Abed</option>
+                    <option value="Mohcen">Mohcen</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="row py-2">
+                <div class="col">
+                <label>Consultation Type</label>
+                  <select class="form-select form-select-lg" aria-label=".form-select-lg" id="emergency-droplist"
+                    name="consult_type" required>
+                    <option value="normal" selected>Normal </option>  <!-- ///// Emergency Degree list /////-->
+                    <option value="urgent">urgent</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="row py-3">
+                <div class="col">
+                  <label>Reason</label>
+                  {{consult_form.reason}}
+                </div>
+              </div>
+
+              <hr>
+
+              <div class="row pt-3">
+                <div class="col">
+                  <label>Examination</label>
+                  {{consult_form.examine}}
+                </div>
+              </div>
+
+              <hr>
+
+
+              <div class="row pt-3">
+                <div class="col">
+                  <label>Conclusion</label>
+                  {{consult_form.conclusion}}
+                </div>
+              </div>
+
+              <hr>
+
+              <div class="row pt-3">
+                <label>Prescription</label>
+                <div class="col mb-4 d-flex justify-content-center">
+                  <button id="adddrug" class="btn btn-primary" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#collapseDrugs" aria-expanded="false" aria-controls="collapseDrugs">
+                    Add Drugs
+                  </button>
+                </div>
+              </div>
+
+              <div class="collapse" id="collapseDrugs">
+                <div class="row justify-content-center" style="margin-bottom: 60px ;">
+                  <div class="col-lg-6 d-flex justify-content-center align-items-center">
+                    <select data-placeholder="Add drug .. " class="chosen-select" multiple tabindex="6"
+                      name="selected-drugs" required>
+                      <option value=""></option>
+                      <optgroup label="Pills">
+                        <option value="Aspirine">Aspirine</option>
+                        <option value="manich pharmacie">manich pharmacie</option>
+                        <option value="manich pharmacie2">manich pharmacie2</option>
+                        <option value="manich pharmacie3">manich pharmacie3</option>
+                      <optgroup>
+                      <optgroup label="Vaccins">
+                        <option value="manich pharmacie4">manich pharmacie4</option>
+                        <option value="manich pharmacie5">manich pharmacie5</option>
+                        <option value="manich pharmacie6">manich pharmacie6</option>
+                        <option value="manich pharmacie7">manich pharmacie7</option>
+                      </optgroup>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col d-flex justify-content-center py-3">
+                  <button class="btn btn-primary btn-lg" type="submit" id="create-profile-btn">Save Consultation</button>
+                </div>
+              </div>
+
+
+            </form>
+          </div>
+          <!--End Form-->
+
+        </div>
+        <!-- === End Modal Body === -->
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ******************* Consultation form *******************-->
       </div>{% endblock  %}

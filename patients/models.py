@@ -17,11 +17,12 @@ class Profile(models.Model):
     class Meta:
         abstract = True
     def __str__(self):
-        return self.fname
+        return str(self.fname)
     
 
 class Patient(Profile):
     patient_id = models.AutoField(primary_key=True)
+    
 
 class doctor(Profile):
     doctor_id = models.AutoField(primary_key=True)

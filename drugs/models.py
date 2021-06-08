@@ -8,4 +8,4 @@ class drug(models.Model):
     added_date = models.DateTimeField(auto_now_add=True, null=True)
 
     def __str__(self):
-            return self.name
+            return str(self.name)

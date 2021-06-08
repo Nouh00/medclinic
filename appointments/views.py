@@ -1,3 +1,4 @@
+from django.db.models import query
 from django.shortcuts import render, redirect
 from .models import appointment
 from patients.models import Patient
@@ -5,6 +6,7 @@ from .forms import add_appointment_form, add_patient_form
 from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from accounts.decorators import allowed_users 
+from .filters import appoint_filter
 
 # Create your views here.
 @login_required(login_url="accounts:login")
@@ -12,9 +14,13 @@ from accounts.decorators import allowed_users
 def index(request):
     appointments = appointment.objects.filter(patient__isnull=False).order_by("-appointment_date")
     patient_form = add_patient_form()
+    appointment_filter = request.GET.get('filter_appoint')
+    if appointment_filter !='' and appointment_filter is not None:
+        appointments = appointments.filter(patient__icontains=appointment_filter)
+
     context = {
         "appointments":appointments,
-        "patient_form": patient_form
+        "patient_form": patient_form,
         }
     return render(request, 'appointments/index.html', context)
 
