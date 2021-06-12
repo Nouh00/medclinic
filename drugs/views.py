@@ -28,7 +28,7 @@ def add_drug(request):
     return render(request, 'drugs:add_drug')
 
 @login_required(login_url="accounts:login")
-@allowed_users(allowed_roles=['admin','secretary','doctor'])
+@allowed_users(allowed_roles=['admin'])
 def edit_drug(request, id):
 
     _drug = drug.objects.get(id = id)
@@ -45,7 +45,7 @@ def edit_drug(request, id):
     return render(request, 'drugs/edit_drug.html', context)
 
 @login_required(login_url="accounts:login")
-@allowed_users(allowed_roles=['admin','secretary','doctor'])
+@allowed_users(allowed_roles=['admin'])
 def delete_drug(request, id):
     drug.objects.get(id=id).delete()
     return redirect('drugs:drugs')

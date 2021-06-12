@@ -12,14 +12,17 @@ class Document(models.Model):
     class Meta:
         abstract = True
     
-    def __str__(self):
-        return str(self.doc_type)
 
 class prescription(Document):
     def drugs_default():
         return {"drug": "None"}
         
     drug_data = models.JSONField(default=drugs_default)
+    drugs_count = models.IntegerField(null=True)
     prescription_id = models.AutoField(primary_key=True)
     note = models.TextField(null=True)
+
+    
+    def __str__(self):
+        return str(self.doc_type)
     

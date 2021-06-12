@@ -32,6 +32,27 @@ a:hover{
   color: #3399ff;
 }
 
+
+ #drugs-table td{
+  text-align: left;
+  padding-right: 60px;
+
+}
+
+#show-prescription{
+  font-family: "Lato", sans-serif;
+  background-color: transparent;
+  color: #3399ff;
+  font-weight: 700;
+  border-radius: 7px;
+  border: none;
+  border-color: #3399ff;
+}
+
+#drugs-table th{
+  text-align: left;
+}
+
 #back{
   background-color: transparent;
   color: #686868;

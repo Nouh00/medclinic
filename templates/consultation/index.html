@@ -44,12 +44,12 @@
                   <div class="col-md-4 py-2">{{consultation.patient.fname}}</div>
                   <div class="col-md-3 py-2">{{consultation.added_date}}</div>
 
-                  <div class="col-md d-flex justify-content-end">
-                    <form action="#" method='post'>
-                      <button type="submit" class="btn btn-primary btn-md" id="editcons-btn">Edit</button>
-                    </form>
+                  <div class="col-md ">
+                  <form action="view_consult/{{consultation.id}}" method='post'>
+                  {% csrf_token %}
+                    <button type="submit" class="btn btn-primary btn-md" id="editdrug-btn">View</button>
+                  </form>
                   </div>
-
                   <div class="col-md">
                     <form action="#" method='post'>
                       <button type="submit" class="btn btn-danger btn-md" id="deletecons-btn">Delete</button>
@@ -89,28 +89,26 @@
 
           <div class="container" id="Consultation-form">
 
-            <form>
+            <form action="{% url 'consultations:add_consult' %}"  method='post'>
+            {% csrf_token %}
               <div class="row py-2">
                 <div class="col">
                 <label>Patient</label>
-                  <select class="form-select form-select-lg" aria-label=".form-select-lg" id="patients-droplist"
-                    name="patient" required>
-                    <option selected>Select patient .. </option>   <!-- ///// Patients list /////-->
-                    <option value="Nouh">Nouh</option>
-                    <option value="Abed">Abed</option>
-                    <option value="Mohcen">Mohcen</option>
-                  </select>
+                  {{consult_form.patient}}
                 </div>
               </div>
 
               <div class="row py-2">
                 <div class="col">
                 <label>Consultation Type</label>
+                <!--
                   <select class="form-select form-select-lg" aria-label=".form-select-lg" id="emergency-droplist"
-                    name="consult_type" required>
-                    <option value="normal" selected>Normal </option>  <!-- ///// Emergency Degree list /////-->
+                    name="cons_type" required>
+                    <option value="normal" selected>Normal </option>   ///// Emergency Degree list /////
                     <option value="urgent">urgent</option>
                   </select>
+                  -->
+                  {{consult_form.cons_type}}
                 </div>
               </div>
 
@@ -139,7 +137,7 @@
                   {{consult_form.conclusion}}
                 </div>
               </div>
-
+<!--
               <hr>
 
               <div class="row pt-3">
@@ -174,7 +172,7 @@
                   </div>
                 </div>
               </div>
-
+-->
               <div class="row">
                 <div class="col d-flex justify-content-center py-3">
                   <button class="btn btn-primary btn-lg" type="submit" id="create-profile-btn">Save Consultation</button>

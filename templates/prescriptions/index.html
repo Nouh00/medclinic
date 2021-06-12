@@ -45,11 +45,6 @@
                   
 
 
-                  <div class="col-md d-flex justify-content-end">
-                    <form action="#" method='post'>
-                      <button type="submit" class="btn btn-primary btn-md" id="editdrug-btn">Edit</button>
-                    </form>
-                  </div>
                   <div class="col-md ">
                   <form action="view_presc/{{prescription.prescription_id}}" method='post'>
                   {% csrf_token %}
@@ -162,6 +157,7 @@
                               <div class="input-group mb-3" id="dosage">
 
                                 <input name="dosage1" type="text" class="form-control" aria-label="dosage">
+                                <input name="drugs_count" type="hidden" value="1">
                                 <span class="input-group-text">mg</span>
                               </div>
                             </div>
@@ -271,7 +267,7 @@
       html += '<li id="drug-list-item">';
       html += '<div class="row justify-content-center">';
       html += '<div class="col-2">';
-      html += '<input class="form-control" list="drugsDataList" id="drugs-DataList" placeholder="Drug name .." name="drugs' +currentItem+ '">';
+      html += '<input class="form-control" list="drugsDataList" id="drugs-DataList" placeholder="Drug name .." name="drug' +currentItem+ '">';
       html += '<datalist id="drugsDataList">';
       html += '<option value="Grippex">';
       html += '<option value="Romafed">';

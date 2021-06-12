@@ -3,7 +3,7 @@ from patients.models import Patient
 
 # Create your models here.
 class consultation(models.Model):
-    cons_types = [(1,"Urjent"),(2,"Normal")]
+    cons_types = [("urgent","urgent"),("normal","normal")]
     reason = models.CharField( max_length=50)
     cons_type = models.CharField( max_length=50, choices=cons_types)
     examine =  models.CharField(max_length=50)

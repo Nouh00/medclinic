@@ -35,120 +35,192 @@
 
                     <hr style="display: block;">
 
-                    <div class="container">
-                        <div class="row px-3">
-                            <div class="col-2">
-                                <p>Drug name</p>
-                            </div>
-                            <div class="col">
-                                <p>Dosage</p>
-                            </div>
-                            <div class="col-3">
-                                <p>Timing</p>
-                            </div>
-                            <div class="col">
-                                <p>Morning</p>
-                            </div>
-                            <div class="col">
-                                <p>Noon</p>
-                            </div>
-                            <div class="col">
-                                <p>Night</p>
-                            </div>
-                            <div class="col-2">
-                                <p>Duration</p>
-                            </div>
-                        </div>
+                    <table id="drugs-table">
+                                        <tr>
+                                            <th>
+                                                <p>Drug name</p>
+                                            </th>
+                                            <th>
+                                                <p>Dosage(mg)</p>
+                                            </th>
+                                            <th>
+                                                <p>Timing</p>
+                                            </th>
+                                            <th>
+                                                <p>Morning</p>
+                                            </th>
+                                            <th>
+                                                <p>Noon</p>
+                                            </th>
+                                            <th>
+                                                <p>Night</p>
+                                            </th>
+                                            <th>
+                                                <p>Duration(Days)</p>
+                                            </th>
+                                        </tr>
 
-                        <div class="row px-3">
-                            <div class="col-2">
-                                Doliprane
-                            </div>
-                            <div class="col">
-                                100mg
-                            </div>
-                            <div class="col-3">
-                                After meal
-                            </div>
-                            <div class="col">
-                                01
-                            </div>
-                            <div class="col">
-                                00
-                            </div>
-                            <div class="col">
-                                02
-                            </div>
-                            <div class="col-2">
-                                05 Days
-                            </div>
-                        </div>
+                                        <tr>
+                                            <td>
+                                            {% for key, value in drug_data.items %}
+                                                    {{ value.drug1 }}
+                                            {% endfor %}
+                                            </td>
+                                            <td>
+                                            {% for key, value in drug_data.items %}
+                                                    {{ value.dosage1  }}
+                                            {% endfor %}
+                                            </td>
+                                            <td id="when">
+                                            {% for key, value in drug_data.items %}
+                                                    {{ value.time1 }}
+                                            {% endfor %}
+                                            </td>
+                                            <td>
+                                            {% for key, value in drug_data.items %}
+                                                    {{ value.morning1 }}
+                                            {% endfor %}
+                                            </td>
+                                            <td>
+                                            {% for key, value in drug_data.items %}
+                                                    {{ value.noon1 }}
+                                            {% endfor %}
+                                            </td>
+                                            <td>
+                                            {% for key, value in drug_data.items %}
+                                                    {{ value.night1 }}
+                                            {% endfor %}
+                                            </td>
+                                            <td>
+                                            {% for key, value in drug_data.items %}
+                                                    {{ value.duration1 }}
+                                            {% endfor %}
+                                            </td>
+                                        </tr>
 
-                        <div class="row px-3">
-                            <div class="col-2">
-                                Grippex
-                            </div>
-                            <div class="col">
-                                500mg
-                            </div>
-                            <div class="col-3">
-                                During meal
-                            </div>
-                            <div class="col">
-                                02
-                            </div>
-                            <div class="col">
-                                00
-                            </div>
-                            <div class="col">
-                                00
-                            </div>
-                            <div class="col-2">
-                                10 Days
-                            </div>
-                        </div>
-
-                        <div class="row px-3">
-                            <div class="col-2">
-                                Lactofibre
-                            </div>
-                            <div class="col">
-                                250mg
-                            </div>
-                            <div class="col-3">
-                                Before meal
-                            </div>
-                            <div class="col">
-                                00
-                            </div>
-                            <div class="col">
-                                01
-                            </div>
-                            <div class="col">
-                                01
-                            </div>
-                            <div class="col-2">
-                                25 Days
-                            </div>
-                        </div>
-
-                        <div class="row px-3 mt-5">
-                            <div class="col-2">
-                                <p>Note</p>
-                            </div>
-                        </div>
-                        <div class="row px-3">
-                            <div class="col">
-                                {% for x in drug_data %}
-                                {{x}}
-                                {% endfor %}
-                            </div>
-                        </div>
-                        <div class="row px-3">
-                            <div class="col">
-                                {{drug_data}}
-                            </div>
-                        </div>
+                                        
+                                        <tr>
+                                            <td>
+                                            {% for key, value in drug_data.items %}
+                                                    {{ value.drug2 }}
+                                            {% endfor %}
+                                            </td>
+                                            <td>
+                                            {% for key, value in drug_data.items %}
+                                                    {{ value.dosage2  }}
+                                            {% endfor %}
+                                            </td>
+                                            <td id="when">
+                                            {% for key, value in drug_data.items %}
+                                                    {{ value.time2 }}
+                                            {% endfor %}
+                                            </td>
+                                            <td>
+                                            {% for key, value in drug_data.items %}
+                                                    {{ value.morning2 }}
+                                            {% endfor %}
+                                            </td>
+                                            <td>
+                                            {% for key, value in drug_data.items %}
+                                                    {{ value.noon2 }}
+                                            {% endfor %}
+                                            </td>
+                                            <td>
+                                            {% for key, value in drug_data.items %}
+                                                    {{ value.night2 }}
+                                            {% endfor %}
+                                            </td>
+                                            <td>
+                                            {% for key, value in drug_data.items %}
+                                                    {{ value.duration2 }}
+                                            {% endfor %}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                            {% for key, value in drug_data.items %}
+                                                    {{ value.drug3 }}
+                                            {% endfor %}
+                                            </td>
+                                            <td>
+                                            {% for key, value in drug_data.items %}
+                                                    {{ value.dosage3  }}
+                                            {% endfor %}
+                                            </td>
+                                            <td id="when">
+                                            {% for key, value in drug_data.items %}
+                                                    {{ value.time3 }}
+                                            {% endfor %}
+                                            </td>
+                                            <td>
+                                            {% for key, value in drug_data.items %}
+                                                    {{ value.morning3 }}
+                                            {% endfor %}
+                                            </td>
+                                            <td>
+                                            {% for key, value in drug_data.items %}
+                                                    {{ value.noon3 }}
+                                            {% endfor %}
+                                            </td>
+                                            <td>
+                                            {% for key, value in drug_data.items %}
+                                                    {{ value.night3 }}
+                                            {% endfor %}
+                                            </td>
+                                            <td>
+                                            {% for key, value in drug_data.items %}
+                                                    {{ value.duration3 }}
+                                            {% endfor %}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                            {% for key, value in drug_data.items %}
+                                                    {{ value.drug4 }}
+                                            {% endfor %}
+                                            </td>
+                                            <td>
+                                            {% for key, value in drug_data.items %}
+                                                    {{ value.dosage4  }}
+                                            {% endfor %}
+                                            </td>
+                                            <td id="when">
+                                            {% for key, value in drug_data.items %}
+                                                    {{ value.time4 }}
+                                            {% endfor %}
+                                            </td>
+                                            <td>
+                                            {% for key, value in drug_data.items %}
+                                                    {{ value.morning4 }}
+                                            {% endfor %}
+                                            </td>
+                                            <td>
+                                            {% for key, value in drug_data.items %}
+                                                    {{ value.noon4 }}
+                                            {% endfor %}
+                                            </td>
+                                            <td>
+                                            {% for key, value in drug_data.items %}
+                                                    {{ value.night4 }}
+                                            {% endfor %}
+                                            </td>
+                                            <td>
+                                            {% for key, value in drug_data.items %}
+                                                    {{ value.duration4 }}
+                                            {% endfor %}
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <div class="row px-3 mt-5">
+                                            <div class="col-2">
+                                                <p>Note</p>
+                                            </div>
+                                        </div>
+                                        <div class="row px-3">
+                                            <div class="col">
+                                                {{presc_data.note}}
+                                            </div>
+                                        </div>
                     </div>
 
                     <hr style="display: block;">

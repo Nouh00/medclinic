@@ -3,9 +3,12 @@ from django.shortcuts import redirect, render
 from .models import prescription
 from patients.models import Patient, doctor
 from drugs.models import drug
+from django.contrib.auth.decorators import login_required
+from accounts.decorators import allowed_users
 import datetime, json
 
 # Create your views here.
+@login_required(login_url="accounts:login")
 def index(request):
     presc_list = prescription.objects.all()
     patients_list = Patient.objects.all()
@@ -21,14 +24,19 @@ def index(request):
 
 
 
+@login_required(login_url="accounts:login")
+@allowed_users(allowed_roles=['admin','doctor'])
 def add_prescription(request):
-    drugs= []
+    drugs= {}
     if request.method == 'POST':
-        for x in range(int(request.POST['drugs_count'])):
-            for d,v in request.POST.items():
-                if str(d).endswith(str(x)):
-                    drugs.append({x:v})
-    
+        x = 1
+        while x <= int(request.POST['drugs_count']):
+            drugs[x]= {}
+            for k,v in request.POST.items():
+                if str(k).endswith(str(x)):
+                    drugs[x][k] = v
+            x += 1        
+        
         
         doc = doctor.objects.get(doctor_id=request.POST['doctor'])
         patient = Patient.objects.get(patient_id=request.POST['patient'])
@@ -37,18 +45,24 @@ def add_prescription(request):
             patient=patient,
             note=request.POST['note'],
             doc_type="prescription",
-            drug_data = drugs
+            drug_data = drugs,
             )
-
+        print(drugs)
+        print(int(request.POST['drugs_count']))
         return redirect('prescriptions:prescriptions')
-    
+
+
+@login_required(login_url="accounts:login")
+@allowed_users(allowed_roles=['admin','doctor'])    
 def delete_prescription(request, presc_id):
     prescriptions = prescription.objects.get(prescription_id=presc_id).delete()
     return redirect("prescriptions:prescriptions")
 
+
+@login_required(login_url="accounts:login")
+@allowed_users(allowed_roles=['admin','secretary','doctor'])
 def view_presc(request, presc_id):
     prescriptions =prescription.objects.get(prescription_id=presc_id)
-    presc_drugs = prescriptions.drug_data
     birth = prescriptions.patient.birth
     td=datetime.datetime.now().date() 
     age = int((td-birth).days /365.25)
@@ -61,12 +75,9 @@ def view_presc(request, presc_id):
         'adresse': prescriptions.patient.adresse,
         'age': age
     }
-    presc_drugs1= {}
-    for x in presc_drugs:
-        presc_drugs1 = x
 
     context={
-        "drug_data": json.dumps(presc_drugs),
+        "drug_data": prescriptions.drug_data,
         "presc_data": prescriptions,
         "patient":patient_data
     }
