@@ -6,11 +6,32 @@ from drugs.models import drug
 from django.contrib.auth.decorators import login_required
 from accounts.decorators import allowed_users
 import datetime, json
+from django.template.loader import render_to_string
+from django.http import JsonResponse
 
 # Create your views here.
 @login_required(login_url="accounts:login")
 def index(request):
-    presc_list = prescription.objects.all()
+    context = {}
+    url_parameter = request.GET.get("q")
+    
+    if url_parameter:
+        presc_list = prescription.objects.filter(patient__fname__icontains=url_parameter)
+    else:
+        presc_list = prescription.objects.all()
+
+
+    if request.is_ajax():
+        html = render_to_string(
+            template_name="partials/prescriptions_search.html", 
+            context={"presc_list": presc_list}
+        )
+
+        data_dict = {"html_from_view": html}
+
+        return JsonResponse(data=data_dict, safe=False)
+
+    user = request.user.groups.get()
     patients_list = Patient.objects.all()
     doctors_list = doctor.objects.all()
     drugs_list = drug.objects.all()
@@ -19,6 +40,7 @@ def index(request):
         "patients_list":patients_list,
         "doctors_list":doctors_list,
         "drugs_list":drugs_list,
+        "user":str(user)
     }
     return render(request, "prescriptions/index.html", context)
 

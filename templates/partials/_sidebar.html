@@ -82,13 +82,16 @@
     </div>
   </div>
 </div>
-
+ 
 <div class="row py-2">
   <div class="col gy-5">
     <hr style="width:20%; height: 2px; margin-top: 17%;">
-    <div class="profile">
+    <div class="profile">   
       <a href="#">My Profile</a>
       <!--My profile-->
+    </div>
+    <div class="profile">   
+      <h4>Signed as {{request.user.groups.get }}</h4>
     </div>
   </div>
 </div>

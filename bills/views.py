@@ -1,9 +1,28 @@
 from django.shortcuts import redirect, render
 from .models import Bill
 from patients.models import Patient,doctor,secretary
+from django.template.loader import render_to_string
+from django.http import JsonResponse
 # Create your views here.
 def index(request):
-    bills_list = Bill.objects.all()
+    context = {}
+    url_parameter = request.GET.get("q")
+    
+    if url_parameter:
+        bills_list = Bill.objects.filter(patient__fname__icontains=url_parameter)
+    else:
+        bills_list = Bill.objects.all()
+    if request.is_ajax():
+        html = render_to_string(
+            template_name="partials/bills_search.html", 
+            context={"bills_list": bills_list}
+        )
+
+        data_dict = {"html_from_view": html}
+
+        return JsonResponse(data=data_dict, safe=False)
+
+    
     patients_list = Patient.objects.all()
     doctors_list = doctor.objects.all()
     secretaries_list = secretary.objects.all()

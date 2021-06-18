@@ -4,12 +4,33 @@ from django.contrib.auth.decorators import login_required
 from accounts.decorators import unauthenticated_user, allowed_users
 from appointments.forms import add_patient_form
 import datetime
+from django.template.loader import render_to_string
+from django.http import JsonResponse
 # Create your views here.
 
 @login_required(login_url="accounts:login")
 @allowed_users(allowed_roles=['admin','secretary','doctor'])
 def index(request):
-    patients = Patient.objects.all().order_by('lname')
+    context = {}
+    url_parameter = request.GET.get("q")
+    
+    if url_parameter:
+        patients = Patient.objects.filter(fname__icontains=url_parameter).order_by('lname')
+    else:
+        patients = Patient.objects.all().order_by('lname')
+
+
+    if request.is_ajax():
+        html = render_to_string(
+            template_name="partials/patients_search.html", 
+            context={"patients": patients}
+        )
+
+        data_dict = {"html_from_view": html}
+
+        return JsonResponse(data=data_dict, safe=False)
+
+
     patient_form = add_patient_form()
     context = {
         'patients': patients,

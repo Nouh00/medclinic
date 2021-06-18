@@ -7,16 +7,49 @@ from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from accounts.decorators import allowed_users 
 from .filters import appoint_filter
+from django.template.loader import render_to_string
+from django.http import JsonResponse
 
 # Create your views here.
 @login_required(login_url="accounts:login")
 @allowed_users(allowed_roles=['admin','secretary','doctor'])
 def index(request):
-    appointments = appointment.objects.filter(patient__isnull=False).order_by("-appointment_date")
+    context = {}
+    url_parameter = request.GET.get("q")
+    if request.GET.get("from") : filter_from = request.GET.get("from")
+    else:filter_from = None
+    
+    if request.GET.get("to") : filter_to = request.GET.get("to") 
+    else:filter_to = None
+    
+
+    if (filter_from is None) and (filter_to is None) and (url_parameter == 'All'):
+        print('1')
+        appointments = appointment.objects.filter(patient__isnull=False).order_by("-appointment_date")
+    elif (url_parameter) and (url_parameter != 'All') and (filter_from is None) and (filter_to is None):
+        print('2')
+        appointments = appointment.objects.filter(patient__isnull=False).filter(appointment_state__icontains=url_parameter).order_by("-appointment_date")
+    elif filter_from and filter_to and (url_parameter == 'All'):
+        print('3')
+        appointments = appointment.objects.filter(patient__isnull=False).filter(appointment_date__gte=filter_from,appointment_date__lte=filter_to ).order_by("-appointment_date")
+    elif filter_from and filter_to and url_parameter and (url_parameter != 'All'):
+        print('4')
+        appointments = appointment.objects.filter(patient__isnull=False).filter(appointment_date__gte=filter_from,appointment_date__lte=filter_to).filter(appointment_state__icontains=url_parameter).order_by("-appointment_date")
+    else:
+        print('5')
+        appointments = appointment.objects.filter(patient__isnull=False).order_by("-appointment_date")        
+
+    if request.is_ajax():
+        html = render_to_string(
+            template_name="partials/appointments_search.html", 
+            context={"appointments": appointments}
+        )
+
+        data_dict = {"html_from_view": html}
+
+        return JsonResponse(data=data_dict, safe=False)
+
     patient_form = add_patient_form()
-    appointment_filter = request.GET.get('filter_appoint')
-    if appointment_filter !='' and appointment_filter is not None:
-        appointments = appointments.filter(patient__icontains=appointment_filter)
 
     context = {
         "appointments":appointments,

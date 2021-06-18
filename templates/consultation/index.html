@@ -13,56 +13,28 @@
 
             <!--New consultationButton-->
             <div class="col-5">
-
+              {% if user == 'doctor' %}
               <button type="submit" class="btn btn-primary btn-md" id="Add-btn" data-bs-target="#consultation-1"
                 data-bs-toggle="modal" data-bs-dismiss="modal">Start New Consultations</button>
-
+              {% endif %}
             </div>
             <!--End New consultationButton-->
 
             <!--Search bar-->
             <div class="col d-flex justify-content-end">
               <form class="d-flex">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" id="searchbar">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" id="user-input">
                 <button class="btn btn" type="submit" id="Search-btn">Search</button>
               </form>
             </div>
           </div>
           <!--End Search bar-->
 
-          <div class="row px-5 py-5">
+          <div class="row px-5 py-5" id="replaceable-content">
             <!--row-->
 
             <!--Consultations List-->
-            <ul class="list-group">
-              {% for consultation in consultations %}
-              <!--Consultations item 01-->
-              <li class="list-group-item">
-                <div class="row">
-                  
-                  <div class="col-md-1 py-2">{{consultation.id}}</div>
-                  <div class="col-md-4 py-2">{{consultation.patient.fname}}</div>
-                  <div class="col-md-3 py-2">{{consultation.added_date}}</div>
-
-                  <div class="col-md ">
-                  <form action="view_consult/{{consultation.id}}" method='post'>
-                  {% csrf_token %}
-                    <button type="submit" class="btn btn-primary btn-md" id="editdrug-btn">View</button>
-                  </form>
-                  </div>
-                  <div class="col-md">
-                    <form action="#" method='post'>
-                      <button type="submit" class="btn btn-danger btn-md" id="deletecons-btn">Delete</button>
-                    </form>
-                  </div>
-
-                </div>
-              </li>
-              <!--End Consultations item 01-->
-                {% endfor %}
-              <!--Add Consultations items Here!-->
-
-            </ul>
+            {% include 'partials/consultations_search.html' %}
           </div>
           <!--End row-->
 
@@ -101,13 +73,6 @@
               <div class="row py-2">
                 <div class="col">
                 <label>Consultation Type</label>
-                <!--
-                  <select class="form-select form-select-lg" aria-label=".form-select-lg" id="emergency-droplist"
-                    name="cons_type" required>
-                    <option value="normal" selected>Normal </option>   ///// Emergency Degree list /////
-                    <option value="urgent">urgent</option>
-                  </select>
-                  -->
                   {{consult_form.cons_type}}
                 </div>
               </div>
@@ -137,43 +102,7 @@
                   {{consult_form.conclusion}}
                 </div>
               </div>
-<!--
-              <hr>
-
-              <div class="row pt-3">
-                <label>Prescription</label>
-                <div class="col mb-4 d-flex justify-content-center">
-                  <button id="adddrug" class="btn btn-primary" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#collapseDrugs" aria-expanded="false" aria-controls="collapseDrugs">
-                    Add Drugs
-                  </button>
-                </div>
-              </div>
-
-              <div class="collapse" id="collapseDrugs">
-                <div class="row justify-content-center" style="margin-bottom: 60px ;">
-                  <div class="col-lg-6 d-flex justify-content-center align-items-center">
-                    <select data-placeholder="Add drug .. " class="chosen-select" multiple tabindex="6"
-                      name="selected-drugs" required>
-                      <option value=""></option>
-                      <optgroup label="Pills">
-                        <option value="Aspirine">Aspirine</option>
-                        <option value="manich pharmacie">manich pharmacie</option>
-                        <option value="manich pharmacie2">manich pharmacie2</option>
-                        <option value="manich pharmacie3">manich pharmacie3</option>
-                      <optgroup>
-                      <optgroup label="Vaccins">
-                        <option value="manich pharmacie4">manich pharmacie4</option>
-                        <option value="manich pharmacie5">manich pharmacie5</option>
-                        <option value="manich pharmacie6">manich pharmacie6</option>
-                        <option value="manich pharmacie7">manich pharmacie7</option>
-                      </optgroup>
-                    </select>
-                  </div>
-                </div>
-              </div>
--->
-              <div class="row">
+            <div class="row">
                 <div class="col d-flex justify-content-center py-3">
                   <button class="btn btn-primary btn-lg" type="submit" id="create-profile-btn">Save Consultation</button>
                 </div>
@@ -193,3 +122,50 @@
 
   <!-- ******************* Consultation form *******************-->
       </div>{% endblock  %}
+
+
+{% block custom_js %}
+<script>
+const user_input= $("#user-input")
+const search_icon = $('#Search-btn')
+const artists_div = $('#replaceable-content')
+const endpoint = '/consultations/'
+const delay_by_in_ms = 300
+let scheduled_function = false
+
+let ajax_call = function (endpoint, request_parameters) {
+    $.getJSON(endpoint, request_parameters)
+        .done(response => {
+            // fade out the artists_div, then:
+            artists_div.fadeTo('slow', 0).promise().then(() => {
+                // replace the HTML contents
+                artists_div.html(response['html_from_view'])
+                // fade-in the div with new contents
+                artists_div.fadeTo('slow', 1)
+                // stop animating search icon
+                search_icon.removeClass('blink')
+            })
+        })
+}
+
+
+user_input.on('keyup', function () {
+
+    const request_parameters = {
+        q: $(this).val(),// value of user_input: the HTML element with ID user-input
+    }
+
+
+    // start animating the search icon with the CSS class
+    search_icon.addClass('blink')
+
+    // if scheduled_function is NOT false, cancel the execution of the function
+    if (scheduled_function) {
+        clearTimeout(scheduled_function)
+    }
+
+    // setTimeout returns the ID of the function to be executed
+    scheduled_function = setTimeout(ajax_call, delay_by_in_ms, endpoint, request_parameters)
+})
+</script>
+{% endblock  %}

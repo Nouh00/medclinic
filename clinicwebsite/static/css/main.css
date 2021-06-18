@@ -4,7 +4,20 @@
   font-weight: 700;
   color: #555555;
 }
+@keyframes blinker {
+  from {opacity: 1.0;}
+  to {opacity: 0.0;}
+}
 
+.blink:after {
+  text-decoration: blink;
+  animation-name: blinker;
+  animation-duration: 0.6s;
+  animation-iteration-count:infinite;
+  animation-timing-function:ease-in-out;
+  animation-direction: alternate;
+  content: 'ing...';
+}
 .logo {
   width: 80%;
   margin-left: 8%;
@@ -32,7 +45,27 @@ a:hover{
   color: #3399ff;
 }
 
+#icon-1,#icon-2,#icon-3,#icon-4{
+  width: 5rem;
+}
 
+#title-1{
+  font-weight: 700;
+}
+#num-1{
+  font-weight: 700;
+  font-size: 2rem;
+}
+
+#card-txt1,#card-txt2,#card-txt3,#card-txt4,#card-txt5,#card-txt6,#card-txt7{
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+
+#card-title1,#card-title2,#card-title3,#card-title4,#card-title5,#card-title6,#card-title7{
+  font-weight: 700;
+  color: #3399ff;
+}
  #drugs-table td{
   text-align: left;
   padding-right: 60px;
@@ -241,7 +274,7 @@ input[type="text"],
 [type="password"],
 [type="number"],
 [type="date"],
-[type="email"] {
+[type="email"]{
 border: 1px solid #c4c4c4;
 border-radius: 10px;
 

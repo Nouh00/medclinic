@@ -13,6 +13,7 @@ class Profile(models.Model):
     email = models.EmailField(max_length=254)
     adresse = models.CharField(max_length=100)
     added_date = models.DateTimeField(auto_now_add=True, null=True)
+    gender = models.CharField(max_length=10, null=True,choices={("F","female"),("M","male")}) 
 
     class Meta:
         abstract = True

@@ -13,3 +13,144 @@
     <input type="submit" value="LogIn">
   </form>
 </main>
+
+    <!--===== ** #Login/Signup Modals ** ====-->
+
+
+    <div class="modal fade" id="logIn" aria-hidden="true" aria-labelledby="logInlabel" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+
+                <!-- === Modal Header === -->
+                <div class="modal-header text-center shadow mb-3" id="modalheader">
+                    <h5 class="modal-title w-100" id="logInlabel">Log in</h5>
+                </div>
+                <!-- === End Modal Header === -->
+
+                <!-- === Modal Body === -->
+                <div class="modal-body">
+
+                    <div class="container" id="Login-form">
+                        <!--Login form-->
+
+                        <form action="{% url 'accounts:login' %}" method="post">
+                        {% csrf_token %}
+                            <div class="row py-2">
+                                <!--Username-->
+                                
+                                <label>Username</label>
+                                    {{login_form.username}}
+                                
+                            </div>
+
+                            <div class="row py-2">
+                            
+                            <label>Password</label>
+                                <!--Password-->
+                                {{login_form.password}}
+                            
+                            </div>
+
+                            <div class="row py-2">
+                                <!--Login btn-->
+                                <div class="col-xl d-flex justify-content-center gy-2">
+                                    <button class="btn btn-primary btn-lg" type="submit" id="login-btn">Log in</button>
+                                </div>
+                            </div>
+                        </form>
+
+                    </div>
+                    <!--End Form-->
+
+                </div>
+                <!-- === End Modal Body === -->
+
+                <!-- === Modal Footer === -->
+                <div class="modal-footer text-center">
+
+                    <p class="w-100">Not a member? <a href="#" data-bs-target="#signup0" data-bs-toggle="modal"
+                            data-bs-dismiss="modal">SignUp</a></p>
+
+                </div>
+                <!-- === End Modal Footer === -->
+
+            </div>
+        </div>
+    </div>
+
+    <!--******************************************************-->
+
+    <div class="modal fade" id="signup0" aria-hidden="true" aria-labelledby="signUplabel" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+
+                <!-- === Modal Header === -->
+                <div class="modal-header text-center shadow mb-3" id="modalheader">
+                    <h5 class="modal-title w-100" id="signUplabel">Sign Up</h5>
+                </div>
+                <!-- === End Modal Header === -->
+
+                <!-- === Modal Body === -->
+
+                <div class="modal-body">
+                    <div class="container">
+                        <!--rightside main container-->
+                        <div class="row">
+                            <!--rightside main row-->
+                            <div class="col px-4">
+                                <!--rightside main Col-->
+
+                                <form action="{% url 'accounts:signup' %}" method="post">
+                                {% csrf_token %}
+                                    <div class="row py-1">
+                                    <label>Username</label>
+                                        {{signup_form.username}}
+                                    </div>
+                                    <div class="row py-1">
+                                        <label>Enter a Password</label>
+                                        {{signup_form.password1}}
+                                    </div>
+                                    <div class="row py-1">
+                                        <label>ReEnter your Password</label>
+                                        {{signup_form.password2}}
+                                    </div>
+
+                                  <div class="row pt-3 px-4">
+                                        <input class="form-check-input" type="radio" name="type" value="doctor"
+                                            id="flexRadioDefault1">Doctor</input>
+                                    </div>
+                                    <div class="row pt-2 mb-2 px-4">
+                                        <input class="form-check-input" type="radio" name="type" value="secretary"
+                                            id="flexRadioDefault2">Secretary</input>
+                                    </div>
+                                  <div class="row py-1">
+                                        <div class="col d-flex justify-content-center py-3">
+                                            <button class="btn btn-primary btn-lg" type="submit"
+                                                id="create-profile-btn">Create your profile</button>
+                                        </div>
+                                    </div>
+                                </form>
+
+                            </div>
+                            <!--End rightside main Col-->
+                        </div>
+                        <!--End rightside main row-->
+                    </div>
+                    <!--End rightside main container-->
+                </div>
+
+                <!-- === End Modal Body === -->
+
+                <!-- === Modal Footer === -->
+                <div class="modal-footer text-center">
+                    <p class="w-100">Already have an account? <a href="#" data-bs-target="#logIn" data-bs-toggle="modal"
+                            data-bs-dismiss="modal">Log in</a></p>
+                </div>
+                <!-- === End Modal Footer === -->
+
+            </div>
+        </div>
+    </div>
+
+    <!--===== ** //End #Login/Signup Modals ** ====-->
+

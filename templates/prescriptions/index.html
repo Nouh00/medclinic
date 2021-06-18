@@ -5,7 +5,7 @@
 <div class="container-fluid">
           <div class="row py-5">
             <div class="col py-3 px-5">
-              <h1 id="Page-title">Presriptions</h1>
+              <h1 id="Page-title">Prescriptions</h1>
               <!--Drugs Title-->
             </div>
           </div>
@@ -13,59 +13,28 @@
 
             <!--New Patient Button-->
             <div class="col-5">
-
+              {% if user == "doctor" %}
               <button type="submit" class="btn btn-primary btn-md" id="Add-btn" data-bs-target="#prescription-1"
                 data-bs-toggle="modal" data-bs-dismiss="modal">New Prescription</button>
-
+              {% endif %}
             </div>
             <!--End New Patient Button-->
 
             <!--Search bar-->
             <div class="col d-flex justify-content-end">
               <form class="d-flex">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" id="searchbar">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" id="user-input">
                 <button class="btn btn" type="submit" id="Search-btn">Search</button>
               </form>
             </div>
           </div>
           <!--End Search bar-->
 
-          <div class="row px-5 py-5">
+          <div class="row px-5 py-5" id="replaceable-content">
             <!--row-->
 
             <!--Drugs List-->
-            <ul class="list-group">
-            {% for prescription in presc_list  %}
-              <!--Drugs item 01-->
-              <li class="list-group-item">
-                <div class="row">
-                  <div class="col-md-4 py-2">{{prescription.note}}</div>
-                  <div class="col-md-4 py-2">Pills</div>
-
-                  
-
-
-                  <div class="col-md ">
-                  <form action="view_presc/{{prescription.prescription_id}}" method='post'>
-                  {% csrf_token %}
-                    <button type="submit" class="btn btn-primary btn-md" id="editdrug-btn">View</button>
-                  </form>
-                  </div>
-
-                  <div class="col-md">
-                    <form action="delete_prescription/{{  prescription.prescription_id }}" method='post'>
-                      {% csrf_token %}
-                      <button type="submit" class="btn btn-danger btn-md" id="deletedrug-btn">Delete</button>
-                    </form>
-                  </div>
-
-                </div>
-              </li>
-              <!--End Drugs item 01-->
-
-              <!--Add Drugs items Here!-->
-            {% endfor %}
-            </ul>
+            {% include 'partials/prescriptions_search.html' %}
           </div>
           <!--End row-->
 
@@ -85,6 +54,7 @@
         <div class="modal-content">
 
           <!-- === Modal Header === -->
+          
           <div class="modal-header text-center shadow mb-3" id="modalheader">
             <h5 class="modal-title w-100" id="prescriptionlabel">Add prescription</h5>
             <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -334,6 +304,49 @@
 
 
 
+<script>
+const user_input= $("#user-input")
+const search_icon = $('#Search-btn')
+const artists_div = $('#replaceable-content')
+const endpoint = '/prescriptions/'
+const delay_by_in_ms = 300
+let scheduled_function = false
+
+let ajax_call = function (endpoint, request_parameters) {
+    $.getJSON(endpoint, request_parameters)
+        .done(response => {
+            // fade out the artists_div, then:
+            artists_div.fadeTo('slow', 0).promise().then(() => {
+                // replace the HTML contents
+                artists_div.html(response['html_from_view'])
+                // fade-in the div with new contents
+                artists_div.fadeTo('slow', 1)
+                // stop animating search icon
+                search_icon.removeClass('blink')
+            })
+        })
+}
+
+
+user_input.on('keyup', function () {
+
+    const request_parameters = {
+        q: $(this).val(),// value of user_input: the HTML element with ID user-input
+    }
+
+
+    // start animating the search icon with the CSS class
+    search_icon.addClass('blink')
+
+    // if scheduled_function is NOT false, cancel the execution of the function
+    if (scheduled_function) {
+        clearTimeout(scheduled_function)
+    }
+
+    // setTimeout returns the ID of the function to be executed
+    scheduled_function = setTimeout(ajax_call, delay_by_in_ms, endpoint, request_parameters)
+})
+</script>
 
 
 {% endblock  %}
